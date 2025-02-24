@@ -1,13 +1,25 @@
 <div class="canvas-parent-container">
-    <div class="toolbar" [style.width]="'30%'">
-        <button (click)="clearCanvas()">Clear</button>
-        <label></label>
-        <input type="color" [(ngModel)]="brushColor">
-        <input type="range" [(ngModel)]="brushSize" min="1" max="20">
-        <input type="color" [(ngModel)]="backgroundColor" (change)="setCanvasBackground(backgroundColor)">
+    <div class="toolbar">
+        <div class="starting-ele">
+            <span [style]="{'display' : 'flex', 'align-items' : 'center'}">{{"Backgound"}}&nbsp;&nbsp;<input
+                    type="color" [(ngModel)]="backgroundColor" (change)="setCanvasBackground(backgroundColor)"></span>
+            <span [style]="{'display' : 'flex', 'align-items' : 'center'}">{{"Color"}}&nbsp;&nbsp;<input type="color"
+                    [(ngModel)]="brushColor"></span>
+            <span [style]="{'display' : 'flex', 'align-items' : 'center'}">{{"Thickness"}}&nbsp;&nbsp;<input
+                    type="range" [(ngModel)]="brushSize" min="1" max="20"></span>
+        </div>
+        <div class="toggle-actions">
+            <span (click)="toggleEraser()"
+                [style]="{'cursor' : 'pointer', 'backgroundColor': isErasing ? '#ff8080' : '#C0C0C0', 'color': 'white', 'padding': '0.4rem 0.5rem', 'border-radius': '0.75rem', 'display': 'flex'}">🧽</span>
+            <span (click)="clearCanvas()"
+                [style]="{'cursor' : 'pointer', 'backgroundColor': hasDrawing ? '#19BDFF' : '#C0C0C0', 'padding': '0.4rem 0.5rem', 'color': 'white', 'border-radius': '0.75rem', 'display': 'flex', 'justify-self': 'flex-end'}">{{"Clear"}}</span>
+            <span (click)="exportCanvas()"
+                [style]="{'cursor' :'pointer' , 'backgroundColor': hasDrawing ? '#4CAF50' : '#C0C0C0' , 'color': 'white', 'padding': '0.4rem 0.5rem', 'border-radius': '0.75rem', 'display': 'flex'}">
+                {{"Export"}}
+            </span>
+        </div>
     </div>
-    <div [style.width]="'70%'">
+    <div>
         <canvas #paintCanvas></canvas>
     </div>
 </div>
-  

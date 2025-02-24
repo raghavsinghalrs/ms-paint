@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild, AfterViewInit, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-canvas',
   standalone: true,
@@ -13,8 +14,10 @@ export class CanvasComponent implements AfterViewInit {
   private ctx!: CanvasRenderingContext2D | null;
   private isDrawing = false;
   brushColor: string = '#000000';
-  backgroundColor: string = '#000000';
+  backgroundColor: string = '#FFFFFF';
   brushSize: number = 5;
+  isErasing = false;
+  hasDrawing : boolean = false;
 
   ngAfterViewInit() {
     const canvas = this.canvasRef.nativeElement;
@@ -22,7 +25,7 @@ export class CanvasComponent implements AfterViewInit {
 
     if (this.ctx) {
       canvas.width = window.innerWidth - 40;
-      canvas.height = 500;
+      canvas.height = 700;
       this.setCanvasBackground('#ffffff');
       this.setupCanvas();
     }
@@ -61,8 +64,14 @@ export class CanvasComponent implements AfterViewInit {
   private draw(event: MouseEvent) {
     if (!this.isDrawing || !this.ctx) return;
 
+    this.hasDrawing = true; 
     this.ctx.lineWidth = this.brushSize;
     this.ctx.strokeStyle = this.brushColor;
+    if (this.isErasing) {
+      this.ctx.strokeStyle = this.backgroundColor;
+    } else {
+      this.ctx.strokeStyle = this.brushColor;
+    }
     this.ctx.lineTo(event.offsetX, event.offsetY);
     this.ctx.stroke();
     this.ctx.beginPath();
@@ -75,8 +84,28 @@ export class CanvasComponent implements AfterViewInit {
   }
 
   clearCanvas() {
-    if (this.ctx) {
-      this.ctx.clearRect(0, 0, this.canvasRef.nativeElement.width, this.canvasRef.nativeElement.height);
+    const canvas = this.canvasRef.nativeElement;
+    const ctx = canvas.getContext("2d");
+    ctx?.clearRect(0, 0, canvas.width, canvas.height);
+    this.hasDrawing = false; 
+  }
+
+  toggleEraser() {
+    this.isErasing = !this.isErasing;
+  }
+
+  exportCanvas(){
+    if (!this.canvasRef || !this.hasDrawing) {
+      alert("Draw something before exporting!");
+      return;
     }
+
+    const canvas = this.canvasRef.nativeElement;
+    const image = canvas.toDataURL("image/png");
+  
+    const link = document.createElement("a");
+    link.href = image;
+    link.download = "drawing.png"; 
+    link.click();
   }
 }
