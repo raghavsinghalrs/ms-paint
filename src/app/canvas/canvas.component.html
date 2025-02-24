@@ -1,0 +1,13 @@
+<div class="canvas-parent-container">
+    <div class="toolbar" [style.width]="'30%'">
+        <button (click)="clearCanvas()">Clear</button>
+        <label></label>
+        <input type="color" [(ngModel)]="brushColor">
+        <input type="range" [(ngModel)]="brushSize" min="1" max="20">
+        <input type="color" [(ngModel)]="backgroundColor" (change)="setCanvasBackground(backgroundColor)">
+    </div>
+    <div [style.width]="'70%'">
+        <canvas #paintCanvas></canvas>
+    </div>
+</div>
+  

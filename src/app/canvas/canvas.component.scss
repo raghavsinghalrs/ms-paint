@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+    background: rgba(239, 238, 238, 0.802);
+    border-radius: 0.3rem;
+    border: 1px solid rgba(231, 229, 229, 0.424);
+  }
+  
+  canvas {
+    border: 1px solid rgba(245, 245, 245, 0.887);
+    cursor: crosshair;
+    height: 95vh;
+    width: 100%;
+    border-radius: 0.5rem;
+  }
+
+  .canvas-parent-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  
